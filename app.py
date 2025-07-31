@@ -41,6 +41,7 @@ st.markdown("""
             padding: 25px 30px;
             border-radius: 15px;
             box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
         .stButton button {
             background-color: #6c63ac;
@@ -82,21 +83,20 @@ st.markdown('<div class="main-container">', unsafe_allow_html=True)
 st.markdown('<div class="title">🏦 Loan Approval Predictor</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">📈 Compare your info with averages & predict loan approval</div>', unsafe_allow_html=True)
 
-# --- Inputs ---
+# --- Combined Card for Input ---
+st.markdown('<div class="card">', unsafe_allow_html=True)
+
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
     st.subheader("👤 Personal Information")
     age = st.number_input("Age", min_value=18, max_value=100)
     gender = st.selectbox("Gender", ['Male', 'Female'])
     marital = st.selectbox("Marital Status", ['Single', 'Married', 'Divorced', 'Widowed'])
     education = st.selectbox("Education Level", ['High School', 'Bachelor', 'Master', 'PhD', 'Other'])
     employment = st.selectbox("Employment Status", ['Employed', 'Self-employed', 'Unemployed'])
-    st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
     st.subheader("💰 Financial Information")
     income = st.number_input("Annual Income ($)", min_value=1000)
     loan_amount = st.number_input("Loan Amount Requested ($)", min_value=1000)
@@ -104,7 +104,8 @@ with col2:
     existing_loans = st.slider("Existing Loans", 0, 10)
     late_payments = st.slider("Late Payments (Last Year)", 0, 10)
     credit_score = st.slider("Credit Score", 300, 850)
-    st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Feature Engineering ---
 income_per_loan = income / loan_amount if loan_amount > 0 else 0
@@ -146,7 +147,7 @@ if st.button("🔍 Predict Loan Approval"):
         st.markdown('<div class="result-rejected">❌ Loan Not Approved</div>', unsafe_allow_html=True)
 
     # --- Chart Comparison ---
-    avg_vals = [75000, 25000, 680, 4]  # Sample reference data
+    avg_vals = [75000, 25000, 680, 4]  # Reference values
     user_vals = [income, loan_amount, credit_score, debt_burden]
     labels = ['Income', 'Loan Amount', 'Credit Score', 'Debt Burden']
 
